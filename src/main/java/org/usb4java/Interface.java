@@ -18,14 +18,15 @@
 
 package org.usb4java;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A collection of alternate settings for a particular USB interface.
  *
  * @author Klaus Reimer (k@ailis.de)
  */
+@EqualsAndHashCode(doNotUseGetters = true)
 public final class Interface
 {
     /** The native pointer to the descriptor structure. */
@@ -70,7 +71,7 @@ public final class Interface
      *
      * @return The interface dump.
      */
-    public String dump()
+    public @NotNull String dump()
     {
         final StringBuilder builder = new StringBuilder();
 
@@ -81,47 +82,14 @@ public final class Interface
 
         for (final InterfaceDescriptor intDesc : this.altsetting())
         {
-            builder.append(String.format("%n") + intDesc.dump());
+            builder.append(String.format("%n")).append(intDesc.dump());
         }
 
         return builder.toString();
     }
 
     @Override
-    public int hashCode()
-    {
-        return new HashCodeBuilder()
-            .append(this.altsetting())
-            .append(this.numAltsetting())
-            .toHashCode();
-    }
-
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-
-        final Interface other = (Interface) obj;
-
-        return new EqualsBuilder()
-            .append(this.altsetting(), other.altsetting())
-            .append(this.numAltsetting(), other.numAltsetting())
-            .isEquals();
-    }
-
-    @Override
-    public String toString()
+    public @NotNull String toString()
     {
         return this.dump();
     }

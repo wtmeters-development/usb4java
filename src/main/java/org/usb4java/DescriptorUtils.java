@@ -5,6 +5,9 @@
 
 package org.usb4java;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,8 +20,7 @@ import java.util.Map;
 public final class DescriptorUtils
 {
     /** Mapping from USB class id to USB class name. */
-    private static final Map<Byte, String> CLASS_NAMES =
-        new HashMap<Byte, String>();
+    private static final Map<Byte, String> CLASS_NAMES = new HashMap<>();
 
     static
     {
@@ -45,6 +47,7 @@ public final class DescriptorUtils
     /**
      * Private constructor to prevent instantiation.
      */
+    @Contract(pure = true)
     private DescriptorUtils()
     {
         // Empty
@@ -58,7 +61,7 @@ public final class DescriptorUtils
      *            The numeric USB class.
      * @return The USB class name.
      */
-    public static String getUSBClassName(final byte usbClass)
+    public static @NotNull String getUSBClassName(final byte usbClass)
     {
         final String name = CLASS_NAMES.get(usbClass);
 
@@ -77,6 +80,7 @@ public final class DescriptorUtils
      *            The binary-coded decimal to decode.
      * @return The decoded binary-coded decimal.
      */
+    @Contract(pure = true)
     public static String decodeBCD(final short bcd)
     {
         return String.format("%x.%02x", (bcd & 0xFF00) >> 8, bcd & 0x00FF);
@@ -89,7 +93,7 @@ public final class DescriptorUtils
      *            The bytes to dump.
      * @return The hex dump.
      */
-    public static String dump(final ByteBuffer bytes)
+    public static @NotNull String dump(final @NotNull ByteBuffer bytes)
     {
         bytes.rewind();
         final int columns = 16;
@@ -139,7 +143,7 @@ public final class DescriptorUtils
      *            The serial number string or null if unknown.
      * @return The descriptor dump.
      */
-    public static String dump(final DeviceDescriptor descriptor,
+    public static String dump(final @NotNull DeviceDescriptor descriptor,
         final String manufacturer, final String product, final String serial)
     {
         return String.format(
@@ -186,7 +190,7 @@ public final class DescriptorUtils
      *            The USB configuration descriptor to dump.
      * @return The descriptor dump.
      */
-    public static String dump(final ConfigDescriptor descriptor)
+    public static @NotNull String dump(final @NotNull ConfigDescriptor descriptor)
     {
         return String.format(
             "Configuration Descriptor:%n" +
@@ -222,7 +226,7 @@ public final class DescriptorUtils
      *            The USB interface descriptor to dump.
      * @return The descriptor dump.
      */
-    public static String dump(final InterfaceDescriptor descriptor)
+    public static @NotNull String dump(@NotNull final InterfaceDescriptor descriptor)
     {
         return String.format(
             "Interface Descriptor:%n" +
@@ -254,7 +258,7 @@ public final class DescriptorUtils
      *            The USB endpoint descriptor to dump.
      * @return The descriptor dump.
      */
-    public static String dump(final EndpointDescriptor descriptor)
+    public static @NotNull String dump(@NotNull final EndpointDescriptor descriptor)
     {
         return String.format(
             "Endpoint Descriptor:%n" +
@@ -288,7 +292,8 @@ public final class DescriptorUtils
      *            The endpoint attributes value.
      * @return The transfer type name.
      */
-    public static String getTransferTypeName(final byte bmAttributes)
+    @Contract(pure = true)
+    public static @NotNull String getTransferTypeName(final byte bmAttributes)
     {
         switch (bmAttributes & LibUsb.TRANSFER_TYPE_MASK)
         {
@@ -313,7 +318,8 @@ public final class DescriptorUtils
      *            The endpoint attributes value.
      * @return The synch type name.
      */
-    public static String getSynchTypeName(final byte bmAttributes)
+    @Contract(pure = true)
+    public static @NotNull String getSynchTypeName(final byte bmAttributes)
     {
         switch ((bmAttributes & LibUsb.ISO_SYNC_TYPE_MASK) >> 2)
         {
@@ -337,7 +343,8 @@ public final class DescriptorUtils
      *            The endpoint attributes value.
      * @return The usage type name.
      */
-    public static String getUsageTypeName(final byte bmAttributes)
+    @Contract(pure = true)
+    public static @NotNull String getUsageTypeName(final byte bmAttributes)
     {
         switch ((bmAttributes & LibUsb.ISO_USAGE_TYPE_MASK) >> 4)
         {
@@ -362,7 +369,8 @@ public final class DescriptorUtils
      *            The speed number.
      * @return The speed name.
      */
-    public static String getSpeedName(final int speed)
+    @Contract(pure = true)
+    public static @NotNull String getSpeedName(final int speed)
     {
         switch (speed)
         {

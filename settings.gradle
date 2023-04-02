@@ -1,0 +1,21 @@
+pluginManagement {
+    repositories {
+        maven {
+            url "https://nexus.gluonhq.com/nexus/content/repositories/releases"
+        }
+
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+//            library('csuite-sdk', 'csuite-sdk', 'lib-system').version {
+//                strictly '[4.0.0, 4.100.200['
+//            }
+
+            from(files('libs.versions.toml'))
+        }
+    }
+}

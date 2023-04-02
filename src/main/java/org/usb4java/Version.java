@@ -18,14 +18,15 @@
 
 package org.usb4java;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import lombok.EqualsAndHashCode;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Structure providing the version of the libusb runtime.
  *
  * @author Klaus Reimer (k@ailis.de)
  */
+@EqualsAndHashCode(doNotUseGetters = true)
 public final class Version
 {
     /** The native pointer to the version structure. */
@@ -86,46 +87,7 @@ public final class Version
     public native String rc();
 
     @Override
-    public int hashCode()
-    {
-        return new HashCodeBuilder()
-            .append(this.major())
-            .append(this.minor())
-            .append(this.micro())
-            .append(this.nano())
-            .append(this.rc())
-            .toHashCode();
-    }
-
-    @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
-            return true;
-        }
-        if (obj == null)
-        {
-            return false;
-        }
-        if (this.getClass() != obj.getClass())
-        {
-            return false;
-        }
-
-        final Version other = (Version) obj;
-
-        return new EqualsBuilder()
-            .append(this.major(), other.major())
-            .append(this.minor(), other.minor())
-            .append(this.micro(), other.micro())
-            .append(this.nano(), other.nano())
-            .append(this.rc(), other.rc())
-            .isEquals();
-    }
-
-    @Override
-    public String toString()
+    public @NotNull String toString()
     {
         return this.major() + "." + this.minor() + "." + this.micro() + "."
             + this.nano() + this.rc();
